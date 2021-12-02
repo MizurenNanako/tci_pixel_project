@@ -3,10 +3,14 @@
 
 int main()
 {
-    tci::vec_t<int, 5> a = {1, 2, 3, 4, 5, 6};
-    for (auto i : a * 2)
+    tci::vec_t<double, 2> a = {-2.5, 0};
+    tci::vec_t<double, 2> b = {0, 0.5};
+    std::cout << (a & b) << std::endl;
+    /*
+    for (auto i : a & b)
     {
         std::cout << i << " ";
     }
+    */
     std::cout << std::endl;
 }
