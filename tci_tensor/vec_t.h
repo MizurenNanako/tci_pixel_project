@@ -20,6 +20,8 @@ namespace tci
         ~vec_t();
 
         vec_t(std::initializer_list<T> l);
+        vec_t(CC &copy);
+        vec_t(CC &&move);
 
         T *begin();
         T *end();
@@ -27,6 +29,10 @@ namespace tci
         T &operator[](size_t index);
         CC operator+(CC &rhs);
         CC operator-(CC &rhs);
+        CC operator*(CC &rhs);
+        CC operator*(const T &rhs);
+        CC operator/(const T &rhs);
+        T operator^(CC &rhs);
     };
 }
 

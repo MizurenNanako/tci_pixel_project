@@ -24,6 +24,16 @@ namespace tci
             ++p;
         }
     }
+    TT CC::vec_t(CC &copy)
+        : vec_t()
+    {
+        _pdata = std::copy(copy.begin(), copy.end(), _pdata);
+    }
+    TT CC::vec_t(CC &&move)
+    {
+        _pdata = move._pdata;
+        move._pdata = nullptr;
+    }
 
     TT T *CC::begin()
     {
@@ -43,7 +53,9 @@ namespace tci
     TT CC CC::operator+(CC &rhs)
     {
         CC r;
-        for (T *i = r._pdata, *j = _pdata, *k = rhs._pdata; i < i + N; ++i, ++j, ++k)
+        for (T *i = r.begin(), *j = begin(), *k = rhs.begin();
+             i < r.end();
+             ++i, ++j, ++k)
         {
             *i = *j + *k;
         }
@@ -52,9 +64,55 @@ namespace tci
     TT CC CC::operator-(CC &rhs)
     {
         CC r;
-        for (T *i = r._pdata, *j = _pdata, *k = rhs._pdata; i < i + N; ++i, ++j, ++k)
+        for (T *i = r.begin(), *j = begin(), *k = rhs.begin();
+             i < r.end();
+             ++i, ++j, ++k)
         {
             *i = *j - *k;
+        }
+        return r;
+    }
+    TT CC CC::operator*(CC &rhs)
+    {
+        CC r;
+        for (T *i = r.begin(), *j = begin(), *k = rhs.begin();
+             i < r.end();
+             ++i, ++j, ++k)
+        {
+            *i = *j * *k;
+        }
+        return r;
+    }
+    TT CC CC::operator*(const T &rhs)
+    {
+        CC r;
+        for (T *i = r.begin(), *j = begin();
+             i < r.end();
+             ++i, ++j)
+        {
+            *i = *j * rhs;
+        }
+        return r;
+    }
+    TT CC CC::operator/(const T &rhs)
+    {
+        CC r;
+        for (T *i = r.begin(), *j = begin();
+             i < r.end();
+             ++i, ++j)
+        {
+            *i = *j / rhs;
+        }
+        return r;
+    }
+    TT T CC::operator^(CC &rhs)
+    {
+        T r;
+        for (T *j = begin(), *k = rhs.begin();
+             j < end();
+             ++j, ++k)
+        {
+            r += *j * *k;
         }
         return r;
     }
