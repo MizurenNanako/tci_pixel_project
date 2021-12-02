@@ -1,4 +1,4 @@
-#include "../vec_t.cpp"
+#include "../vec_t.h"
 #include <iostream>
 
 int main()

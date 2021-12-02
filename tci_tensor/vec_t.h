@@ -49,4 +49,6 @@ namespace tci
     };
 }
 
+#include "vec_t.cpp"
+
 #endif //_vector_t_h
