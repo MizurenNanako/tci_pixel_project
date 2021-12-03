@@ -33,18 +33,24 @@ namespace tci
         T *end();
 
         T &operator[](size_t index);
-        CC operator+(const CC &rhs); // Liner add
-        CC operator-(const CC &rhs); // Liner substrate
-        CC operator*(const CC &rhs); // Hadamard product
-        CC operator*(const T &rhs);  // Liner scaler product
-        CC operator/(const T &rhs);  // Liner scaler devision
-        T operator^(const CC &rhs);  // Inner product
+        // Liner add
+        CC operator+(const CC &rhs);
+        // Liner substrate
+        CC operator-(const CC &rhs);
+        // Hadamard product
+        CC operator*(const CC &rhs);
+        // Liner scaler product
+        CC operator*(const T &rhs);
+        // Liner scaler devision
+        CC operator/(const T &rhs);
+        // Inner product
+        T operator^(const CC &rhs);
 
         // special
-        // Outer product, Euclidian
-        // 2-dimension
+
+        // Outer product, Euclidian, 2-dimension
         _T0 friend _T operator&(const _C2 &lhs, const _C2 &rhs);
-        // 3-dimention
+        // Outer product, Euclidian, 3-dimention
         _T0 friend _C3 operator&(const _C3 &lhs, const _C3 &rhs);
     };
 }
