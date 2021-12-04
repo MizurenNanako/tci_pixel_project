@@ -3,6 +3,7 @@
 
 #include "tcidef.h"
 #include <initializer_list>
+#include <functional>
 
 #define TT template <class T, size_t N>
 #define T0 template <class T>
@@ -20,9 +21,15 @@ namespace tci
     {
     private:
         template <size_t A, size_t B>
-        using SmallerVec_T = typename IfThenElse<(A < B), vec_t<T, A>, vec_t<T, B>>::Result;
+        using SmallerVec_T =
+            typename IfThenElse<(A < B),
+                                vec_t<T, A>,
+                                vec_t<T, B>>::Result;
         template <size_t A, size_t B>
-        using LargerVec_T = typename IfThenElse<(A > B), vec_t<T, A>, vec_t<T, B>>::Result;
+        using LargerVec_T =
+            typename IfThenElse<(A > B),
+                                vec_t<T, A>,
+                                vec_t<T, B>>::Result;
 
     protected:
         T *_pdata;
@@ -43,21 +50,51 @@ namespace tci
         // Liner add
         template <size_t M>
         auto operator+(const CM &rhs) -> LargerVec_T<N, M>;
+        // Liner increase
+        template <size_t M>
+        CC &operator+=(const CM &rhs);
 
         // Liner substrate
         template <size_t M>
         auto operator-(const CM &rhs) -> LargerVec_T<N, M>;
+        // Liner decrease
+        template <size_t M>
+        CC &operator-=(const CM &rhs);
 
-        // Hadamard product
+        // Hadamard produce
         template <size_t M>
         auto operator*(const CM &rhs) -> LargerVec_T<N, M>;
+        // Hadamard multiple
+        template <size_t M>
+        CC &operator*=(const CM &rhs);
 
+        // Liner scaler add
+        CC operator+(const T &rhs);
+        // Liner scaler increase
+        CC &operator+=(const T &rhs);
+        // Liner scaler substrate
+        CC operator-(const T &rhs);
+        // Liner scaler decrease
+        CC &operator-=(const T &rhs);
         // Liner scaler product
         CC operator*(const T &rhs);
+        // Liner scaler multiple
+        CC &operator*=(const T &rhs);
         // Liner scaler devision
         CC operator/(const T &rhs);
+        // Liner scaler devide
+        CC &operator/=(const T &rhs);
+
+        // For-each calculation
+        CC op_c(const T &rhs, std::function<T(T, T)> op);
+        // For-each operation
+        CC &op_eq(const T &rhs, std::function<T(T)> op);
+
         // Inner product
         T operator^(const CC &rhs);
+
+        // Swap
+        inline void swap(CC &rhs);
 
         // special
 

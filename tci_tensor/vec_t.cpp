@@ -74,6 +74,18 @@ namespace tci
         return r;
     }
 
+    // Liner increase
+    TT template <size_t M>
+    CC &CC::operator+=(const CM &rhs)
+    {
+        for (T *i = begin(), *j = rhs.begin();
+             i < end() && j < rhs.end(); ++i, ++j)
+        {
+            *i += *j;
+        }
+        return *this;
+    }
+
     // Liner substrate
     TT template <size_t M>
     auto CC::operator-(const CM &rhs) -> LargerVec_T<N, M>
@@ -97,41 +109,95 @@ namespace tci
         return r;
     }
 
-    // Hadamard product
+    // Liner decrease
+    TT template <size_t M>
+    CC &CC::operator-=(const CM &rhs)
+    {
+        for (T *i = begin(), *j = rhs.begin();
+             i < end() && j < rhs.end(); ++i, ++j)
+        {
+            *i -= *j;
+        }
+        return *this;
+    }
+
+    // Hadamard produce
     TT template <size_t M>
     auto CC::operator*(const CM &rhs) -> LargerVec_T<N, M>
     {
         LargerVec_T<N, M> r;
-        T *i = r.begin(), *j = begin(), *k = rhs.begin();
-        for (; j < end() && k < rhs.end(); ++i, ++j, ++k)
+        for (T *i = r.begin(), *j = begin(), *k = rhs.begin();
+             j < end() && k < rhs.end();
+             ++i, ++j, ++k)
         {
             *i = *j * *k;
         }
         return r;
     }
 
-    TT CC CC::operator*(const T &rhs)
+    // Hadamard multiple
+    TT template <size_t M>
+    CC &CC::operator*=(const CM &rhs)
+    {
+        for (T *i = begin(), *j = rhs.begin();
+             i < end() && j < rhs.end(); ++i, ++j)
+        {
+            *i *= *j;
+        }
+        return *this;
+    }
+
+#define _OP_NIB(op)                      \
+    CC r;                                \
+    for (T *i = r.begin(), *j = begin(); \
+         i < r.end();                    \
+         ++i, ++j)                       \
+    {                                    \
+        *i = *j op rhs;                  \
+    }                                    \
+    return r;
+#define _OPEQ_NIB(op)                                          \
+    std::for_each(begin(), end(), [&rhs](T &i) { i += rhs; }); \
+    return *this;
+
+    // Liner scaler add
+    TT CC CC::operator+(const T &rhs){_OP_NIB(+)}
+    // Liner scaler increase
+    TT CC &CC::operator+=(const T &rhs){_OPEQ_NIB(+)}
+    // Liner scaler substrate
+    TT CC CC::operator-(const T &rhs){_OP_NIB(-)}
+    // Liner scaler decrease
+    TT CC &CC::operator-=(const T &rhs){_OPEQ_NIB(-)}
+    // Liner scaler product
+    TT CC CC::operator*(const T &rhs){_OP_NIB(*)}
+    // Liner scaler multiple
+    TT CC &CC::operator*=(const T &rhs){_OPEQ_NIB(*)}
+    // Liner scaler devision
+    TT CC CC::operator/(const T &rhs){_OP_NIB(/)}
+    // Liner scaler devide
+    TT CC &CC::operator/=(const T &rhs){_OPEQ_NIB(/)}
+
+    // For-each operation
+    TT CC CC::op_c(const T &rhs, std::function<T(T, T)> op)
     {
         CC r;
         for (T *i = r.begin(), *j = begin();
              i < r.end();
              ++i, ++j)
         {
-            *i = *j * rhs;
+            *i = op(*j, rhs);
         }
         return r;
     }
-    TT CC CC::operator/(const T &rhs)
+    // For-each operation
+    TT CC &CC::op_eq(const T &rhs, std::function<T(T)> op)
     {
-        CC r;
-        for (T *i = r.begin(), *j = begin();
-             i < r.end();
-             ++i, ++j)
-        {
-            *i = *j / rhs;
-        }
-        return r;
+        std::for_each(begin(), end(), [&rhs, &op](T &i)
+                      { op(i, rhs); });
+        return *this;
     }
+
+    // Inner product
     TT T CC::operator^(const CC &rhs)
     {
         T r;
@@ -142,6 +208,11 @@ namespace tci
             r += *j * *k;
         }
         return r;
+    }
+
+    TT void CC::swap(CC &rhs)
+    {
+        std::swap(_pdata, rhs._pdata);
     }
 
     // Outer product, Euclidian, 2-dimension
@@ -161,3 +232,7 @@ namespace tci
         return r;
     }
 }
+
+// Cancel all marcos
+#undef _OP_NIB
+#undef _OPEQ_NIB
