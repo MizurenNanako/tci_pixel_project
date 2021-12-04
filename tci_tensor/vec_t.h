@@ -18,6 +18,12 @@ namespace tci
 {
     TT class vec_t
     {
+    private:
+        template <size_t A, size_t B>
+        using SmallerVec_T = typename IfThenElse<(A < B), vec_t<T, A>, vec_t<T, B>>::Result;
+        template <size_t A, size_t B>
+        using LargerVec_T = typename IfThenElse<(A > B), vec_t<T, A>, vec_t<T, B>>::Result;
+
     protected:
         T *_pdata;
 
@@ -29,16 +35,23 @@ namespace tci
         vec_t(CC &copy);
         vec_t(CC &&move);
 
-        T *begin();
-        T *end();
+        T *begin() const;
+        T *end() const;
 
         T &operator[](size_t index);
+
         // Liner add
-        CC operator+(const CC &rhs);
+        template <size_t M>
+        auto operator+(const CM &rhs) -> LargerVec_T<N, M>;
+
         // Liner substrate
-        CC operator-(const CC &rhs);
+        template <size_t M>
+        auto operator-(const CM &rhs) -> LargerVec_T<N, M>;
+
         // Hadamard product
-        CC operator*(const CC &rhs);
+        template <size_t M>
+        auto operator*(const CM &rhs) -> LargerVec_T<N, M>;
+
         // Liner scaler product
         CC operator*(const T &rhs);
         // Liner scaler devision

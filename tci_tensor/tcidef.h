@@ -10,6 +10,21 @@
 namespace tci
 {
     const size_t _BUFLEN = 16;
+    
+    template <bool Condition, typename Then, typename Else>
+    struct IfThenElse;
+
+    template <typename Then, typename Else>
+    struct IfThenElse<true, Then, Else>
+    {
+        using Result = Then;
+    };
+
+    template <typename Then, typename Else>
+    struct IfThenElse<false, Then, Else>
+    {
+        using Result = Else;
+    };
 }
 
 #endif //_tcidef_h
