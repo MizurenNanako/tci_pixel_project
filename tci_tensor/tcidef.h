@@ -10,18 +10,24 @@
 namespace tci
 {
     const size_t _BUFLEN = 16;
+
+    template <typename T>
+    constexpr bool isequal_const(T N, T M)
+    {
+        return N == M;
+    }
     
     template <bool Condition, typename Then, typename Else>
-    struct IfThenElse;
+    struct TypeIf;
 
     template <typename Then, typename Else>
-    struct IfThenElse<true, Then, Else>
+    struct TypeIf<true, Then, Else>
     {
         using Result = Then;
     };
 
     template <typename Then, typename Else>
-    struct IfThenElse<false, Then, Else>
+    struct TypeIf<false, Then, Else>
     {
         using Result = Else;
     };

@@ -6,9 +6,11 @@
 #include <functional>
 
 #define TT template <class T, size_t N>
+#define _TT template <class _T, size_t _N>
 #define T0 template <class T>
 #define _T0 template <class _T>
 #define CC vec_t<T, N>
+#define _CC vec_t<_T, _N>
 #define CM vec_t<T, M>
 #define C2 vec_t<T, 2>
 #define C3 vec_t<T, 3>
@@ -22,14 +24,14 @@ namespace tci
     private:
         template <size_t A, size_t B>
         using SmallerVec_T =
-            typename IfThenElse<(A < B),
-                                vec_t<T, A>,
-                                vec_t<T, B>>::Result;
+            typename TypeIf<(A < B),
+                            vec_t<T, A>,
+                            vec_t<T, B>>::Result;
         template <size_t A, size_t B>
         using LargerVec_T =
-            typename IfThenElse<(A > B),
-                                vec_t<T, A>,
-                                vec_t<T, B>>::Result;
+            typename TypeIf<(A > B),
+                            vec_t<T, A>,
+                            vec_t<T, B>>::Result;
 
     protected:
         T *_pdata;
@@ -39,7 +41,8 @@ namespace tci
         ~vec_t();
 
         vec_t(std::initializer_list<T> l);
-        vec_t(CC &copy);
+        template <size_t M>
+        vec_t(CM &copy);
         vec_t(CC &&move);
 
         T *begin() const;
@@ -95,6 +98,7 @@ namespace tci
 
         // Swap
         inline void swap(CC &rhs);
+        _TT void swap(_CC &lhs, _CC &rhs);
 
         // special
 

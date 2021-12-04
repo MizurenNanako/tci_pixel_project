@@ -24,10 +24,14 @@ namespace tci
             ++p;
         }
     }
-    TT CC::vec_t(CC &copy)
-        : vec_t()
+
+    TT template <size_t M>
+    CC::vec_t(CM &copy)
     {
-        _pdata = std::copy(copy.begin(), copy.end(), _pdata);
+        _pdata = new T[N];
+        isequal_const(N, M)
+            ? std::copy(copy.begin(), copy.end(), _pdata)
+            : std::copy(copy.begin(), copy.begin() + ((N < M) ? N : M), _pdata);
     }
     TT CC::vec_t(CC &&move)
     {
@@ -210,9 +214,14 @@ namespace tci
         return r;
     }
 
-    TT void CC::swap(CC &rhs)
+    // Swap
+    TT inline void CC::swap(CC &rhs)
     {
         std::swap(_pdata, rhs._pdata);
+    }
+    _TT void swap(_CC &lhs, _CC &rhs)
+    {
+        lhs.swap(rhs);
     }
 
     // Outer product, Euclidian, 2-dimension
