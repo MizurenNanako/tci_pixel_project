@@ -5,7 +5,10 @@
 #include <stdexcept>
 
 #define ERR(EXCEPTION, STR) \
-    EXCEPTION {std::string{STR " in "} + __func__ + " " __FILE__ "\n"}
+    EXCEPTION { std::string{STR " in "} + __func__ + " " __FILE__ "\n" }
+
+#define MAX(a, b) \
+    ((a) > (b) ? (a) : (b))
 
 namespace tci
 {
@@ -16,7 +19,7 @@ namespace tci
     {
         return N == M;
     }
-    
+
     template <bool Condition, typename Then, typename Else>
     struct TypeIf;
 
