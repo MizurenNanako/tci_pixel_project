@@ -8,7 +8,7 @@
     EXCEPTION { std::string{STR " in "} + __func__ + " " __FILE__ "\n" }
 
 #define MAX(a, b) \
-    ((a) > (b) ? (a) : (b))
+    (((a) > (b)) ? (a) : (b))
 
 namespace tci
 {

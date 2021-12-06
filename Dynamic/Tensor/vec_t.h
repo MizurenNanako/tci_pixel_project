@@ -16,7 +16,7 @@ namespace tci
         size_t _size;
 
     public:
-        vec_t(size_t init_size = 1);
+        explicit vec_t(size_t init_size = 1);
         ~vec_t();
 
         vec_t(std::initializer_list<T> l);

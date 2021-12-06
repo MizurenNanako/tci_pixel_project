@@ -1,5 +1,6 @@
 #include "vec_t.h"
 #include <algorithm>
+#include <iostream>
 
 namespace tci
 {
@@ -62,11 +63,21 @@ namespace tci
     template <class T>
     vec_t<T> vec_t<T>::operator+(const vec_t<T> &rhs)
     {
-        vec_t<T> r{MAX(_size, rhs._size)};
+        vec_t<T> r(MAX(_size, rhs._size));
         T *i = r.begin(), *j = begin(), *k = rhs.begin();
         for (; j < end() && k < rhs.end(); ++i, ++j, ++k)
         {
             *i = *j + *k;
+        }
+        if (_size > rhs._size)
+        {
+            for (; j < end(); ++i, ++j)
+                *i = *j;
+        }
+        if (_size < rhs._size)
+        {
+            for (; k < rhs.end(); ++i, ++k)
+                *i = *k;
         }
         return r;
     }
@@ -87,7 +98,7 @@ namespace tci
     template <class T>
     vec_t<T> vec_t<T>::operator-(const vec_t<T> &rhs)
     {
-        vec_t<T> r{MAX(_size, rhs._size)};
+        vec_t<T> r(MAX(_size, rhs._size));
         T *i = r.begin(), *j = begin(), *k = rhs.begin();
         for (; j < end() && k < rhs.end(); ++i, ++j, ++k)
         {
@@ -122,7 +133,7 @@ namespace tci
     template <class T>
     vec_t<T> vec_t<T>::operator*(const vec_t<T> &rhs)
     {
-        vec_t<T> r{MAX(_size, rhs._size)};
+        vec_t<T> r(MAX(_size, rhs._size));
         for (T *i = r.begin(), *j = begin(), *k = rhs.begin();
              j < end() && k < rhs.end();
              ++i, ++j, ++k)
@@ -145,7 +156,7 @@ namespace tci
     }
 
 #define _OP_NIB(op)                      \
-    vec_t<T> r;                          \
+    vec_t<T> r(_size);                   \
     for (T *i = r.begin(), *j = begin(); \
          i < r.end();                    \
          ++i, ++j)                       \
