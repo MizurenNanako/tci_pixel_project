@@ -1,0 +1,5 @@
+make --dry-run --keep-going --print-directory
+make: Entering directory '/home/tci/Repos/tci_pixel_project/Dynamic/Numeric'
+g++  ./test/m.cpp rational.cpp  -o m
+make: Leaving directory '/home/tci/Repos/tci_pixel_project/Dynamic/Numeric'
+ 

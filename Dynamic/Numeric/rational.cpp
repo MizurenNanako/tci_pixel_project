@@ -1,7 +1,9 @@
-#include "ration.h"
+#include "../../Common/tcidef.h"
+#include "rational.h"
 #include <string>
 #include <numeric>
 #include <sstream>
+#include <stdexcept>
 
 ration_t::ration_t(long long int a, long long int b)
     : m_a{a}, m_b{b}
@@ -40,6 +42,10 @@ ration_t ration_t::operator/(const ration_t &r)
 {
     return ration_t{m_a * r.m_b, m_b * r.m_a};
 }
+ration_t ration_t::operator^(short r)
+{
+    return ration_t{__pow_ll(m_a, r), __pow_ll(m_b, r)};
+}
 
 ration_t &ration_t::operator+=(const ration_t &r)
 {
@@ -69,6 +75,13 @@ ration_t &ration_t::operator/=(const ration_t &r)
     m_a *= r.m_b;
     m_b *= r.m_a;
     __simplify();
+    return *this;
+}
+ration_t &ration_t::operator^=(short r)
+{
+    m_a = __pow_ll(m_a, r);
+    m_b = __pow_ll(m_b, r);
+    // I bet we don't need to simplify this one.
     return *this;
 }
 
@@ -123,12 +136,6 @@ istream &operator>>(istream &in, ration_t &me)
 {
     std::string buf;
     in >> buf;
-    /* int sym = -1;
-    size_t pos_minus = buf.find('-');
-    if (pos_minus == std::string::npos)
-    {
-        sym = 1;
-    } */
     size_t pos_backsplash = buf.find('/');
     if (pos_backsplash != std::string::npos)
     {
@@ -167,4 +174,23 @@ void ration_t::__simplify()
     long long int base = std::gcd(m_a, m_b);
     m_a /= base;
     m_b /= base;
+}
+
+long long int ration_t::__pow_ll(
+    long long int l, unsigned short int r)
+{
+    long long int res = 1;
+    while (r)
+    {
+        if (r & 1)
+            if (__LONG_LONG_MAX__ / l < res)
+                throw new ERR(
+                    std::out_of_range,
+                    "Long Long Int Overflow");
+            else
+                res *= l;
+        l *= l;
+        r >>= 1;
+    }
+    return res;
 }

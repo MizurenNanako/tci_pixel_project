@@ -1,4 +1,4 @@
-#include "vec_t.h"
+#include "vec_t_s.h"
 #include <algorithm>
 
 namespace tci
@@ -52,7 +52,7 @@ namespace tci
     {
         if (index < N)
             return _pdata[index];
-        throw ERR(std::out_of_range);
+        throw new ERR(std::out_of_range, "Invalid Index");
     }
 
     // Liner add

@@ -23,11 +23,13 @@ public:
     ration_t operator-();
     ration_t operator*(const ration_t &r);
     ration_t operator/(const ration_t &r);
+    ration_t operator^(short r);
 
     ration_t &operator+=(const ration_t &r);
     ration_t &operator-=(const ration_t &r);
     ration_t &operator*=(const ration_t &r);
     ration_t &operator/=(const ration_t &r);
+    ration_t &operator^=(short r);
 
     bool operator==(const ration_t &r);
     bool operator!=(const ration_t &r);
@@ -43,6 +45,8 @@ public:
 
 private:
     void __simplify();
+    long long int __pow_ll(
+        long long int l, unsigned short int r);
 };
 
 #endif //_ration_h

@@ -4,8 +4,8 @@
 #include <cstddef>
 #include <stdexcept>
 
-#define ERR(EXCEPTION) \
-    new EXCEPTION { __FILE__ + __func__ }
+#define ERR(EXCEPTION, STR) \
+    EXCEPTION {std::string{STR " in "} + __func__ + " " __FILE__ "\n"}
 
 namespace tci
 {

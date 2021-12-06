@@ -1,7 +1,7 @@
 #ifndef _vector_t_h
 #define _vector_t_h
 
-#include "tcidef.h"
+#include "../../Common/tcidef.h"
 #include <initializer_list>
 #include <functional>
 
@@ -109,6 +109,6 @@ namespace tci
     };
 }
 
-#include "vec_t.cpp"
+#include "vec_t_s.cpp"
 
 #endif //_vector_t_h
