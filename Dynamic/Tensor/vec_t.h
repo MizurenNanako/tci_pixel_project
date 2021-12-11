@@ -15,18 +15,34 @@ namespace tci
         T *_pdata;
         size_t _size;
 
+    private:
+        inline void _allocate();
+
     public:
-        explicit vec_t(size_t init_size = 1);
+        explicit vec_t(size_t init_size = 0);
         ~vec_t();
 
-        vec_t(std::initializer_list<T> l);
+        vec_t(const std::initializer_list<T> &l);
         vec_t(vec_t<T> &copy);
         vec_t(vec_t<T> &&move);
 
         T *begin() const;
         T *end() const;
 
+        // Index access
         T &operator[](size_t index);
+        // Read access
+        T at(size_t index);
+        // Write access
+        vec_t<T> &set(size_t index, T &value);
+        // Dimension
+        inline size_t dimension();
+        // Resize
+        vec_t<T> &resize(size_t dim);
+        // Sum
+        T sum();
+        // Normalize
+        vec_t<T> normalize();
 
         // Liner add
         vec_t<T> operator+(const vec_t<T> &rhs);

@@ -5,31 +5,45 @@
 namespace tci
 {
     template <class T>
+    inline void vec_t<T>::_allocate()
+    {
+        if (_size == 0)
+            _pdata = nullptr;
+        else
+            _pdata = (T *)malloc(sizeof(T[_size]));
+    }
+
+    template <class T>
     vec_t<T>::vec_t(size_t init_size)
         : _size{init_size}
     {
-        _pdata = new T[_size]();
+        _allocate();
+        new (_pdata) T[_size];
     }
     template <class T>
     vec_t<T>::~vec_t()
     {
-        delete[] _pdata;
+        if (_size)
+            delete[] _pdata;
     }
     template <class T>
-    vec_t<T>::vec_t(std::initializer_list<T> l)
-        : vec_t(l.size())
+    vec_t<T>::vec_t(const std::initializer_list<T> &l)
+        : _size{l.size()}
     {
+        _allocate();
         T *p = _pdata;
         for (const T &i : l)
         {
-            *(p++) = i;
+            // p++ = new T(i);
+            new (p++) T{i};
         }
     }
 
     template <class T>
     vec_t<T>::vec_t(vec_t<T> &copy)
-        : vec_t(copy._size)
+        : _size{copy._size}
     {
+        _allocate();
         std::copy(copy.begin(), copy.end(), _pdata);
     }
     template <class T>
@@ -51,12 +65,79 @@ namespace tci
         return _pdata + _size;
     }
 
+    // Index access
     template <class T>
     T &vec_t<T>::operator[](size_t index)
     {
         if (index < _size)
             return _pdata[index];
         throw new ERR(std::out_of_range, "Invalid Index");
+    }
+    // Read access
+    template <class T>
+    T vec_t<T>::at(size_t index)
+    {
+        if (index < _size)
+            return _pdata[index];
+        throw new ERR(std::out_of_range, "Invalid Index");
+    }
+    // Write access
+    template <class T>
+    vec_t<T> &vec_t<T>::set(size_t index, T &value)
+    {
+        if (index < _size)
+            _pdata[index] = value;
+        throw new ERR(std::out_of_range, "Invalid Index");
+        return *this;
+    }
+    // Dimension
+    template <class T>
+    inline size_t vec_t<T>::dimension()
+    {
+        return _size;
+    }
+    // Resize
+    template <class T>
+    vec_t<T> &vec_t<T>::resize(size_t dim)
+    {
+        if (dim)
+        {
+            if (_size)
+            {
+                T *__pdata = new T[dim]();
+                std::copy_n(_pdata, MIN(_size, dim), __pdata);
+                std::swap(_pdata, __pdata);
+                delete[] __pdata;
+            }
+            else
+            {
+                vec_t(dim);
+            }
+            _size = dim;
+        }
+        else
+        {
+            if (_size)
+                delete[] _pdata;
+            _size = dim;
+            _pdata = nullptr;
+        }
+        return *this;
+    }
+    // Sum
+    template <class T>
+    T vec_t<T>::sum()
+    {
+        T res{0};
+        std::for_each(begin(), end(), [&res](T &i)
+                      { res += i; });
+        return res;
+    }
+    // Normalize
+    template <class T>
+    vec_t<T> vec_t<T>::normalize()
+    {
+        return *this / sum();
     }
 
     // Liner add
@@ -235,6 +316,7 @@ namespace tci
     template <class T>
     inline void vec_t<T>::swap(vec_t<T> &rhs)
     {
+        std::swap(_size, rhs._size);
         std::swap(_pdata, rhs._pdata);
     }
     template <class T>

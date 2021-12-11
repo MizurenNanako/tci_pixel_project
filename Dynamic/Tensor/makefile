@@ -3,9 +3,9 @@ CXX		= g++
 N		= 
 CFLAGS	+= -g
 
-test-m : N = m
-test-m : build-test
-test-m : 
+test-vec : N = t_vec
+test-vec : build-test
+test-vec : 
 
 build-test : 
-	$(CXX) $(CFLAGS) test/$(N).cpp -o $(N) $(LDFLAGS)
+	$(CXX) $(CFLAGS) test/$(N).cpp -o t$(N) $(LDFLAGS)
