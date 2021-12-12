@@ -7,41 +7,49 @@ namespace tci
     template <class T>
     inline void vec_t<T>::_allocate()
     {
-        if (_size == 0)
-            _pdata = nullptr;
+        if (_max_size)
+            _pdata = (T *)malloc(sizeof(T[_max_size]));
         else
-            _pdata = (T *)malloc(sizeof(T[_size]));
+            _pdata = nullptr;
+    }
+
+    template <class T>
+    inline void vec_t<T>::_deallocate()
+    {
+        if (!_max_size)
+            return;
+        free(_pdata);
+        _pdata = nullptr;
     }
 
     template <class T>
     vec_t<T>::vec_t(size_t init_size)
-        : _size{init_size}
+        : _max_size{init_size}, _size{init_size}
     {
         _allocate();
-        new (_pdata) T[_size];
+        new (_pdata) T[_max_size];
     }
     template <class T>
     vec_t<T>::~vec_t()
     {
-        if (_size)
+        if (_max_size)
             delete[] _pdata;
     }
     template <class T>
     vec_t<T>::vec_t(const std::initializer_list<T> &l)
-        : _size{l.size()}
+        : _max_size{l.size()}, _size{l.size()}
     {
         _allocate();
         T *p = _pdata;
         for (const T &i : l)
         {
-            // p++ = new T(i);
             new (p++) T{i};
         }
     }
 
     template <class T>
     vec_t<T>::vec_t(vec_t<T> &copy)
-        : _size{copy._size}
+        : _max_size{copy._size}, _size{copy._size}
     {
         _allocate();
         std::copy(copy.begin(), copy.end(), _pdata);
@@ -51,7 +59,27 @@ namespace tci
     {
         _pdata = move._pdata;
         _size = move._size;
+        _max_size = move._max_size;
         move._pdata = nullptr;
+        move._size = move._max_size = 0;
+    }
+
+    template <class T>
+    vec_t<T> &vec_t<T>::operator=(const vec_t<T> &rhs)
+    {
+        if (_max_size >= rhs._size)
+        {
+            std::copy_n(rhs.begin(), rhs._size, _pdata);
+            _size = rhs._size;
+        }
+        else // _max_size < rhs._size
+        {
+            delete[] _pdata;
+            _max_size = _size = rhs._size;
+            _allocate();
+            std::copy_n(rhs.begin(), _max_size, _pdata);
+        }
+        return *this;
     }
 
     template <class T>
@@ -102,26 +130,28 @@ namespace tci
     {
         if (dim)
         {
-            if (_size)
+            if (_max_size)
             {
-                T *__pdata = new T[dim]();
-                std::copy_n(_pdata, MIN(_size, dim), __pdata);
-                std::swap(_pdata, __pdata);
-                delete[] __pdata;
+                if (_max_size < dim)
+                {
+                    T *__pdata = new T[dim]();
+                    std::copy_n(_pdata, MIN(_size, dim), __pdata);
+                    std::swap(_pdata, __pdata);
+                    delete[] __pdata;
+                }
             }
             else
             {
                 vec_t(dim);
             }
-            _size = dim;
         }
-        else
+        /* else // dim == 0
         {
-            if (_size)
+            if (_max_size)
                 delete[] _pdata;
-            _size = dim;
             _pdata = nullptr;
-        }
+        } */
+        _size = dim;
         return *this;
     }
     // Sum

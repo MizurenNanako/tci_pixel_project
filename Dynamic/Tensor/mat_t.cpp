@@ -6,7 +6,9 @@ namespace tci
     mat_t<T>::mat_t(size_t rows, size_t cols)
         : _rows{rows}, _cols{cols}
     {
-        _pdata = new vec_t<vec_t<T>>(rows);
+        _pdata.resize(rows);
+        std::for_each(_pdata.begin(), _pdata.end(), [const size_t & cols](vec_t<T> &i)
+                      { i.resize(cols); });
     }
     template <class T>
     mat_t<T>::mat_t(const std::initializer_list<vec_t<T>> &l)

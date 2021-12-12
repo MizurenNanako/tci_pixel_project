@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Dec 11 14:50:11 2021
+# Make data base, printed on Sun Dec 12 22:34:31 2021
 
 # Variables
 
@@ -21,7 +21,7 @@ NO_AT_BRIDGE = 1
 # environment
 GTK_RC_FILES = /etc/gtk/gtkrc:/home/tci/.gtkrc:/home/tci/.config/gtkrc
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-87ec0c83-29c3-4430-bac8-ec8e62706d44.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-f0103f55-ed5f-4719-8d7c-453f5ccf79d6.sock
 # environment
 VSCODE_CWD = /home/tci
 # default
@@ -89,13 +89,13 @@ MAKEFILE_LIST :=
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 17182
+VSCODE_PID = 1852
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/tci-desktop:@/tmp/.ICE-unix/770,unix/tci-desktop:/tmp/.ICE-unix/770
+SESSION_MANAGER = local/tci-desktop:@/tmp/.ICE-unix/756,unix/tci-desktop:/tmp/.ICE-unix/756
 # automatic
 *F = $(notdir $*)
 # environment
@@ -161,7 +161,7 @@ XDG_VTNR = 1
 # makefile
 .DEFAULT_GOAL := 
 # environment
-SYSTEMD_EXEC_PID = 674
+SYSTEMD_EXEC_PID = 659
 # environment
 EDITOR = micro
 # environment
@@ -277,6 +277,6 @@ GNUmakefile:
 # strcache performance: lookups = 18 / hit rate = 16%
 # hash-table stats:
 # Load=15/8192=0%, Rehash=0, Collisions=0/18=0%
-# Finished Make data base on Sat Dec 11 14:50:11 2021
+# Finished Make data base on Sun Dec 12 22:34:31 2021
 
  

@@ -23,9 +23,13 @@ void pp(const T &q, const char str[])
 
 int main()
 {
-    tci::vec_t<double> a = {1, 2, 3, -3, 4};
-    tci::vec_t<double> b = {1, 2, 3, 8, 9};
-    p(a, "a");
+    tci::vec_t<double> a = {1, -1, 3, -3, 4};
+    tci::vec_t<double> b = {1, 2, 3};
+    tci::vec_t<double> c = {1, 2, 3, 45, 56};
+    p(b, "b");
+    b = a;
+    p(b, "b");
+    b = c;
     p(b, "b");
     std::cout << std::endl;
 }

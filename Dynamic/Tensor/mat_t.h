@@ -9,7 +9,7 @@ namespace tci
     class mat_t
     {
     private:
-        vec_t<vec_t<T>> *_pdata;
+        vec_t<vec_t<T>> _pdata{0};
         size_t _rows;
         size_t _cols;
 

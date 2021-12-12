@@ -14,9 +14,11 @@ namespace tci
     protected:
         T *_pdata;
         size_t _size;
+        size_t _max_size;
 
     private:
         inline void _allocate();
+        inline void _deallocate();
 
     public:
         explicit vec_t(size_t init_size = 0);
@@ -25,6 +27,9 @@ namespace tci
         vec_t(const std::initializer_list<T> &l);
         vec_t(vec_t<T> &copy);
         vec_t(vec_t<T> &&move);
+
+        // Assignment operator
+        vec_t<T> &operator=(const vec_t<T> &rhs);
 
         T *begin() const;
         T *end() const;
