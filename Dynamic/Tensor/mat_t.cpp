@@ -13,12 +13,21 @@ namespace tci
     }
     template <class T>
     mat_t<T>::mat_t(const std::initializer_list<vec_t<T>> &l)
+    : _rows{l.size()}
     {
-        size_t maxlen = 0;
-        _vdata = new vec_t<T>[l.size()](0);
-        for (vec_t<T> &i : l)
-            if (i.dimension() > maxlen)
-                maxlen = i.dimension();
+        _cols = 0;
+        _vdata.resize(_rows);
+        size_t k = 0;
+        for (const vec_t<T> &i : l)
+        {
+            if (i.dimension() > _cols)
+                _cols = i.dimension();
+            _vdata[k++] = i;
+        }
+        for (vec_t<T> &i : _vdata)
+        {
+            i.resize(_cols);
+        }
     }
     template <class T>
     mat_t<T>::~mat_t()

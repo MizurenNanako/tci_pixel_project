@@ -34,8 +34,12 @@ void p(const T &q, const char str[])
 
 int main()
 {
-    tci::mat_t<int> m{5, 8};
-    for (auto &v : m)
+    tci::mat_t<int> m1{
+        {1},
+        {2, 3},
+        {4, 5, 6}};
+    tci::mat_t<int> m2{5, 8};
+    for (auto &v : m2)
     {
         static int i = 0;
         for (auto &t : v)
@@ -43,6 +47,7 @@ int main()
             t = i++;
         }
     }
-    pm(m, "mat m");
+    pm(m1, "mat m1");
+    pm(m2, "mat m2");
     return 0;
 }

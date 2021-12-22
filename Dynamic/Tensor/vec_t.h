@@ -43,7 +43,7 @@ namespace tci
         // Write access
         vec_t<T> &set(size_t index, T &value);
         // Dimension
-        inline size_t dimension();
+        inline size_t dimension() const;
         // Resize
         vec_t<T> &resize(size_t dim);
         // Sum

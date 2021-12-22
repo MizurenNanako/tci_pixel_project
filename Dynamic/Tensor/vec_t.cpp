@@ -128,7 +128,7 @@ namespace tci
     }
     // Dimension
     template <class T>
-    inline size_t vec_t<T>::dimension()
+    inline size_t vec_t<T>::dimension() const
     {
         return _size;
     }
@@ -136,7 +136,7 @@ namespace tci
     template <class T>
     vec_t<T> &vec_t<T>::resize(size_t dim)
     {
-        if (dim)
+        if (dim && dim != _size)
         {
             if (this)
             {
