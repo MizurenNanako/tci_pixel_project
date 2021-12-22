@@ -28,8 +28,10 @@ namespace tci
         vec_t(vec_t<T> &copy);
         vec_t(vec_t<T> &&move);
 
-        // Assignment operator
+        // Copy assignment operator
         vec_t<T> &operator=(const vec_t<T> &rhs);
+        // Move assignment operator
+        vec_t<T> &operator=(vec_t<T> &&rhs);
 
         T *begin() const;
         T *end() const;

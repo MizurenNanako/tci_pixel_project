@@ -83,6 +83,14 @@ namespace tci
     }
 
     template <class T>
+    vec_t<T> &vec_t<T>::operator=(vec_t<T> &&rhs)
+    {
+        _size = rhs._size;
+        _max_size = rhs._max_size;
+        std::swap(_pdata, rhs._pdata);
+    }
+
+    template <class T>
     T *vec_t<T>::begin() const
     {
         return _pdata;
@@ -130,12 +138,28 @@ namespace tci
     {
         if (dim)
         {
-            if (_max_size)
+            if (this)
             {
                 if (_max_size < dim)
                 {
-                    T *__pdata = new T[dim]();
-                    std::copy_n(_pdata, MIN(_size, dim), __pdata);
+                    // allocate space
+                    T *__pdata = (T *)malloc(sizeof(T[dim]));
+                    // initialize the data part
+                    T *i = nullptr, *j = nullptr;
+                    for (i = __pdata, j = _pdata;
+                         (j < _pdata + _size);
+                         ++i, ++j)
+                    {
+                        new (i) T{*j};
+                    }
+                    // initialize the rest part
+                    for (; (i < __pdata + dim); ++i)
+                    {
+                        new (i) T;
+                    }
+                    // this is the old code ignoring class type ↓↓↓
+                    // std::copy_n(_pdata, MIN(_size, dim), __pdata);
+                    // delete buffer, done
                     std::swap(_pdata, __pdata);
                     delete[] __pdata;
                 }
@@ -144,6 +168,7 @@ namespace tci
             {
                 vec_t(dim);
             }
+            _size = dim;
         }
         /* else // dim == 0
         {
@@ -151,7 +176,6 @@ namespace tci
                 delete[] _pdata;
             _pdata = nullptr;
         } */
-        _size = dim;
         return *this;
     }
     // Sum

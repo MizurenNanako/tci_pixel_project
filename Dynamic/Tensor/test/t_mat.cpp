@@ -2,7 +2,7 @@
 #include <iostream>
 
 template <typename T>
-void pv(const tci::vec_t<T> &q, const char str[])
+void pv(tci::vec_t<T> &q, const char str[])
 {
     std::cout << str << '\t';
     for (auto i : q)
@@ -13,13 +13,13 @@ void pv(const tci::vec_t<T> &q, const char str[])
 }
 
 template <typename T>
-void pm(const tci::mat_t<T> &q, const char str[])
+void pm(tci::mat_t<T> &q, const char str[])
 {
-    std::cout << str << '\t';
+    std::cout << str << '\n';
     for (auto i : q)
     {
         pv(i, str);
-        std::cout << str << std::endl;
+        // std::cout << str << std::endl;
     }
     std::cout << std::endl;
 }
@@ -34,5 +34,15 @@ void p(const T &q, const char str[])
 
 int main()
 {
+    tci::mat_t<int> m{5, 8};
+    for (auto &v : m)
+    {
+        static int i = 0;
+        for (auto &t : v)
+        {
+            t = i++;
+        }
+    }
+    pm(m, "mat m");
     return 0;
 }

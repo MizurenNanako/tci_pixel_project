@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Dec 12 22:34:31 2021
+# Make data base, printed on Wed Dec 22 22:44:03 2021
 
 # Variables
 
@@ -21,7 +21,7 @@ NO_AT_BRIDGE = 1
 # environment
 GTK_RC_FILES = /etc/gtk/gtkrc:/home/tci/.gtkrc:/home/tci/.config/gtkrc
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-f0103f55-ed5f-4719-8d7c-453f5ccf79d6.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-055a2315-e40b-4dfb-a6cd-2d4fa9afaae0.sock
 # environment
 VSCODE_CWD = /home/tci
 # default
@@ -45,7 +45,7 @@ VSCODE_LOG_STACK = false
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = /home/tci/.config/Code/CachedData/7db1a2b88f7557e0a43fec75b6ba7e50b3e9f77e
+VSCODE_CODE_CACHE_PATH = /home/tci/.config/Code/CachedData/899d46d82c4c95423fb7e10e68eba52050e30ba3
 # environment
 XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session1
 # environment
@@ -89,13 +89,13 @@ MAKEFILE_LIST :=
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 1852
+VSCODE_PID = 3339
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/tci-desktop:@/tmp/.ICE-unix/756,unix/tci-desktop:/tmp/.ICE-unix/756
+SESSION_MANAGER = local/tci-desktop:@/tmp/.ICE-unix/816,unix/tci-desktop:/tmp/.ICE-unix/816
 # automatic
 *F = $(notdir $*)
 # environment
@@ -161,7 +161,7 @@ XDG_VTNR = 1
 # makefile
 .DEFAULT_GOAL := 
 # environment
-SYSTEMD_EXEC_PID = 659
+SYSTEMD_EXEC_PID = 715
 # environment
 EDITOR = micro
 # environment
@@ -191,7 +191,7 @@ QT_IM_MODULE = fcitx
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-e23efe78-1.63.0-main.sock
+VSCODE_IPC_HOOK = /run/user/1000/vscode-e23efe78-1.63.2-main.sock
 # environment
 XDG_SESSION_ID = 2
 # environment
@@ -277,6 +277,6 @@ GNUmakefile:
 # strcache performance: lookups = 18 / hit rate = 16%
 # hash-table stats:
 # Load=15/8192=0%, Rehash=0, Collisions=0/18=0%
-# Finished Make data base on Sun Dec 12 22:34:31 2021
+# Finished Make data base on Wed Dec 22 22:44:03 2021
 
  

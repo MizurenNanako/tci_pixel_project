@@ -9,12 +9,12 @@ namespace tci
     class mat_t
     {
     private:
-        vec_t<vec_t<T>> _pdata{0};
+        vec_t<vec_t<T>> _vdata{0};
         size_t _rows;
         size_t _cols;
 
     public:
-        explicit mat_t(size_t rows, size_t cols);
+        explicit mat_t(size_t rows = 0, size_t cols = 0);
         mat_t(const std::initializer_list<vec_t<T>> &l);
         ~mat_t();
 
